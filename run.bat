@@ -8,11 +8,10 @@ if not exist .venv\Scripts\python.exe (
 )
 if not exist web\dist\index.html (
   echo Building the app...
+  set "PATH=%~dp0.venv\Scripts;%PATH%"
   pushd web
-  call ..\.venv\Scripts
-pm.exe install --no-fund --no-audit
-  call ..\.venv\Scripts
-pm.exe run build
+  call ..\.venv\Scripts\npm.exe install --no-fund --no-audit
+  call ..\.venv\Scripts\npm.exe run build
   popd
 )
 echo.
