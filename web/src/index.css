@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-card-2: var(--card-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-good: var(--good);
+  --color-warn: var(--warn);
+  --color-bad: var(--bad);
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+:root {
+  color-scheme: light;
+  --bg: #f4f5f7;
+  --card: #ffffff;
+  --card-2: #f7f8fa;
+  --ink: #0e1116;
+  --muted: #667085;
+  --faint: #98a2b3;
+  --line: #e8eaef;
+  --accent: #5b5bf0;
+  --accent-soft: #eef0ff;
+  --good: #12a150;
+  --warn: #d97706;
+  --bad: #e5484d;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg: #0b0d12;
+    --card: #14171f;
+    --card-2: #1b1f29;
+    --ink: #f2f4f7;
+    --muted: #98a2b3;
+    --faint: #667085;
+    --line: #252a35;
+    --accent: #8b8dfb;
+    --accent-soft: #23244a;
+    --good: #3ecf7c;
+    --warn: #f5b544;
+    --bad: #ff6b6f;
+  }
+}
+
+html, body { background: var(--bg); color: var(--ink); }
+body {
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+.tabular { font-variant-numeric: tabular-nums; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+@layer components {
+  .input {
+    @apply w-full rounded-xl border border-line bg-card-2 px-3.5 py-2.5 text-[15px] text-ink outline-none transition placeholder:text-faint focus:border-accent focus:ring-4 focus:ring-accent/15;
+  }
+  .label { @apply mb-1.5 block text-[13px] font-medium text-muted; }
+}
+
+@keyframes sheet-in { from { transform: translateY(28px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes toast-in { from { transform: translateY(10px) scale(.97); opacity: 0; } }
+.animate-sheet { animation: sheet-in .24s cubic-bezier(.2, .8, .2, 1); }
+.animate-fade { animation: fade-in .2s ease-out; }
+.animate-toast { animation: toast-in .2s ease-out; }

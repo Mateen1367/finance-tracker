@@ -1,9 +1,23 @@
 @echo off
+title My Money
 cd /d "%~dp0"
 if not exist .venv\Scripts\python.exe (
-  echo First run: setting up...
+  echo First run: setting things up. This takes a few minutes...
   python -m venv .venv
   .venv\Scripts\python.exe -m pip install -q -r requirements.txt
 )
-start "" http://localhost:8501
-.venv\Scripts\python.exe -m streamlit run app.py
+if not exist web\dist\index.html (
+  echo Building the app...
+  pushd web
+  call ..\.venv\Scripts
+pm.exe install --no-fund --no-audit
+  call ..\.venv\Scripts
+pm.exe run build
+  popd
+)
+echo.
+echo  My Money is running at http://localhost:8501
+echo  Keep this window open while you use the app. Close it to stop.
+echo.
+start "" cmd /c "timeout /t 2 >nul & start http://localhost:8501"
+.venv\Scripts\python.exe -m uvicorn backend.main:app --host 127.0.0.1 --port 8501 --log-level warning
